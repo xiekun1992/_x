@@ -2,6 +2,7 @@ language: node_js
 node_js:
 - stable
 
+script: node_modules/karma/bin/karma start karma.conf.js --single-run
 before_install:
  - export CHROME_BIN=chromuim-browser
  - export DISPLAY=:99.0
