@@ -3,6 +3,8 @@ sudo: true
 node_js:
 - stable
 
+# http://blog.500tech.com/setting-up-travis-ci-to-run-tests-on-latest-google-chrome-version/
+# by default trvis-ci only have FireFox presented,this settings install Chrome before testing
 before_install:  
  - export CHROME_BIN=/usr/bin/google-chrome
  - export DISPLAY=:99.0
