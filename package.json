@@ -4,7 +4,7 @@
   "description": "a subscriber and publisher module using observer pattern",
   "main": "index.js",
   "scripts": {
-    "test": "karma start --single-run"
+    "test": "karma start --single-run --browsers Chrome"
   },
   "repository": {
     "type": "git",
