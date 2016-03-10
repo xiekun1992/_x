@@ -32,10 +32,10 @@ describe('when subscribe event LOGIN,',function(){
 		observer=null;
 	});
 	it('without eventName, subscribe should throw a TypeError',function(){
-		expect(observer.subscribe).toThrowError(TypeError,'eventName should be a string');
+		expect(function(){observer.subscribe()}).toThrowError(TypeError,'eventName should be a string');
 	});
 	it('without callback function, subscribe should throw a TypeError',function(){
-		expect(observer.subscribe).toThrowError(TypeError,'callback should be a function')
+		expect(function(){observer.subscribe('LOGIN')}).toThrowError(TypeError,'callback should be a function')
 	})
 	it('subscribe method should be called with string LOGIN and a callback function',function(){
 		observer.subscribe('LOGIN',cb);
@@ -62,9 +62,12 @@ describe('when subscribe event LOGIN,',function(){
 		})
 	})
 	describe('when unsubscribe event LOGIN,',function(){
-		it('without callback function, unsubscribe method will throw an TypeError',function(){
-			spyOn(observer,'unsubscribe').and.callThrough();
-			expect(observer.unsubscribe).toThrowError(TypeError,/callback function/);
+		it('without eventName, unsubscribe method will throw a TypeError',function(){
+			expect(function(){observer.unsubscribe()}).toThrowError(TypeError,'eventName should be a string');
+		});
+		it('without callback function, unsubscribe method will throw a TypeError',function(){
+			// spyOn(observer,'unsubscribe').and.callThrough();
+			expect(function(){observer.unsubscribe('LOGIN')}).toThrowError(TypeError,/callback function/);
 		})
 
 		it('with callback function, call showEvents method will return an empty array',function(){

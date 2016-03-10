@@ -10,6 +10,9 @@ function Observer(){
 		}
 	}
 	this.unsubscribe=function(eventName,callback){
+		if(typeof eventName !== 'string'){
+			throw new TypeError('eventName should be a string');
+		}
 		if(typeof callback !== 'function'){
 			throw new TypeError('should have second parameter: callback function');
 		}
@@ -26,6 +29,9 @@ function Observer(){
 	this.subscribe=function(eventName,callback){
 		if(typeof eventName !== 'string'){
 			throw new TypeError('eventName should be a string');
+		}
+		if(typeof callback !== 'function'){
+			throw new TypeError('callback should be a function');
 		}
 		if(!events[eventName]){
 			events[eventName]=[];
