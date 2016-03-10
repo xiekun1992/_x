@@ -25,7 +25,7 @@ function Observer(){
 	}
 	this.subscribe=function(eventName,callback){
 		if(typeof eventName !== 'string'){
-			throw new TypeError('eventName should be string');
+			throw new TypeError('eventName should be a string');
 		}
 		if(!events[eventName]){
 			events[eventName]=[];

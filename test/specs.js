@@ -31,8 +31,11 @@ describe('when subscribe event LOGIN,',function(){
 	afterAll(function(){
 		observer=null;
 	});
-	it('without eventName subscribe should throw a TypeError',function(){
-		expect(observer.subscribe).toThrowError(TypeError,'eventName should be string');
+	it('without eventName, subscribe should throw a TypeError',function(){
+		expect(observer.subscribe).toThrowError(TypeError,'eventName should be a string');
+	});
+	it('without callback function, subscribe should throw a TypeError',function(){
+		expect(observer.subscribe).toThrowError(TypeError,'callback should be a function')
 	})
 	it('subscribe method should be called with string LOGIN and a callback function',function(){
 		observer.subscribe('LOGIN',cb);
