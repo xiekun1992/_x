@@ -4,9 +4,13 @@ function Observer(){
 	var events={};
 
 	this.publish=function(eventName,data){
-		var cbArray=events[eventName];
-		for(var i=0;i<cbArray.length;i++){
-			cbArray[i](data);
+		if(eventName in events){
+			var cbArray=events[eventName];
+			for(var i=0;i<cbArray.length;i++){
+				cbArray[i](data);
+			}
+		}else{
+			throw new Error('no '+eventName+' event');
 		}
 	}
 	this.unsubscribe=function(eventName,callback){

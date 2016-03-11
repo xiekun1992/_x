@@ -19,7 +19,7 @@ describe('when initialized',function(){
 	});
 
 });
-// a single event
+// single event
 describe('when subscribe event LOGIN,',function(){
 	var cb;
 
@@ -77,8 +77,8 @@ describe('when subscribe event LOGIN,',function(){
 	})
 });
 
-// serveral event
-describe('when subscribe two events LOGIN, LOGOUT,',function(){
+// multi events
+describe('after subscribe two events LOGIN, LOGOUT,',function(){
 	var cb1,cb2;
 	beforeAll(function(){
 		observer=new Observer();
@@ -87,7 +87,32 @@ describe('when subscribe two events LOGIN, LOGOUT,',function(){
 		observer.subscribe('LOGIN',cb1);
 		observer.subscribe('LOGOUT',cb2);
 	});
-	fit('call showEvents method should return an array contains this two events',function(){
+	afterAll(function(){
+		observer=null;
+	});
+	it('call showEvents method should return an array contains this two events',function(){
 		expect(observer.showEvents()).toEqual(['LOGIN','LOGOUT']);
-	})
-})
+	});
+	it('publish an event LOGOUT, cb2 should be called with the specific object, cb1 should not be called',function(){
+		var user={id:1,username:'xiekun1992'};
+		observer.publish('LOGOUT',user);
+		expect(cb2).toHaveBeenCalledWith(user);
+		expect(cb1).not.toHaveBeenCalled();
+	});
+	describe('unsubscribe event LOGIN,',function(){
+		beforeAll(function(){
+			observer.unsubscribe('LOGIN',cb1);
+		});
+		it('call showEvents method should return an array contains LOGOUT',function(){
+			expect(observer.showEvents()).toEqual(['LOGOUT']);
+		});
+		it('publish event LOGOUT, cb2 should be called with the specific object',function(){
+			var user={id:1,username:'xiekun1992'};
+			observer.publish('LOGOUT',user);
+			expect(cb2).toHaveBeenCalledWith(user);
+		});
+		it('publish event LOGIN, an error will show up',function(){
+			expect(function(){observer.publish('LOGIN',{})}).toThrowError(Error,'no LOGIN event');
+		});
+	});
+});
