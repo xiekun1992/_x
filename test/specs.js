@@ -76,3 +76,18 @@ describe('when subscribe event LOGIN,',function(){
 		})
 	})
 });
+
+// serveral event
+describe('when subscribe two events LOGIN, LOGOUT,',function(){
+	var cb1,cb2;
+	beforeAll(function(){
+		observer=new Observer();
+		cb1=jasmine.createSpy("cb1");
+		cb2=jasmine.createSpy("cb2");
+		observer.subscribe('LOGIN',cb1);
+		observer.subscribe('LOGOUT',cb2);
+	});
+	fit('call showEvents method should return an array contains this two events',function(){
+		expect(observer.showEvents()).toEqual(['LOGIN','LOGOUT']);
+	})
+})
