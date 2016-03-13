@@ -2,7 +2,7 @@
 
 var observer;
 
-describe('when initialized',function(){
+describe('when initialized,',function(){
 
 	beforeAll(function(){
 		observer=new Observer();
@@ -16,6 +16,9 @@ describe('when initialized',function(){
 		expect(observer.unsubscribe).toBeDefined();
 		expect(observer.subscribe).toBeDefined();
 		expect(observer.showEvents).toBeDefined();
+	});
+	it('publish an event not existed should throw an error',function(){
+		expect(function(){observer.publish('INITIAL','initialized')}).toThrowError(Error,'no INITIAL event');
 	});
 
 });
