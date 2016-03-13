@@ -44,9 +44,9 @@ module.exports = function(config) {
         ]
     },
     plugins:[
-        'karma-jasmine',
-        'karma-chrome-launcher',
-        'karma-coverage'
+        require('karma-jasmine'),
+        require('karma-chrome-launcher'),
+        require('karma-coverage')
     ],
     // web server port
     port: 9876,

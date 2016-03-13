@@ -20,14 +20,18 @@ function Observer(){
 		if(typeof callback !== 'function'){
 			throw new TypeError('should have second parameter: callback function');
 		}
-		var eventArray=events[eventName];
-		for(var i=0;i<eventArray.length;i++){
-			if(eventArray[i]===callback){
-				eventArray.splice(i,1);
-				if(eventArray.length===0){
-					delete events[eventName];
+		if(eventName in events){
+			var eventArray=events[eventName];
+			for(var i=0;i<eventArray.length;i++){
+				if(eventArray[i]===callback){
+					eventArray.splice(i,1);
+					if(eventArray.length===0){
+						delete events[eventName];
+					}
 				}
 			}
+		}else{
+			throw new Error('no '+eventName+' event');
 		}
 	}
 	this.subscribe=function(eventName,callback){

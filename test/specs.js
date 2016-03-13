@@ -17,8 +17,13 @@ describe('when initialized,',function(){
 		expect(observer.subscribe).toBeDefined();
 		expect(observer.showEvents).toBeDefined();
 	});
-	it('publish an event not existed should throw an error',function(){
-		expect(function(){observer.publish('INITIAL','initialized')}).toThrowError(Error,'no INITIAL event');
+	describe('there is no event subscribed',function(){
+		it('publish an event should throw an error',function(){
+			expect(function(){observer.publish('INITIAL','initialized')}).toThrowError(Error,'no INITIAL event');
+		});
+		it('unsubscribe an event should throw an error',function(){
+			expect(function(){observer.unsubscribe('INITIAL',function(){})}).toThrowError(Error,'no INITIAL event');
+		});
 	});
 
 });
@@ -119,3 +124,54 @@ describe('after subscribe two events LOGIN, LOGOUT,',function(){
 		});
 	});
 });
+
+// duplicate events
+describe('when subscribe duplicate events LOGIN with two different callback functions, ',function(){
+	var cb1,cb2;
+	var user;
+	beforeAll(function(){
+		observer=new Observer();
+		cb1=jasmine.createSpy('cb1');
+		cb2=jasmine.createSpy('cb2');
+		observer.subscribe('LOGIN',cb1);
+		observer.subscribe('LOGIN',cb2);
+		user={id:1,name:'xiekun1992'};
+	});
+	afterAll(function(){
+		observer=null;
+		cb1=null;
+		cb2=null;
+		user=null;
+	})
+	it('call showEvents method should return an array with LOGIN string only',function(){
+		expect(observer.showEvents()).toEqual(['LOGIN']);
+	});
+	it('publish event LOGIN, cb1 and cb2 should be called at the same time',function(){
+		observer.publish('LOGIN',user);
+		expect(cb1).toHaveBeenCalledWith(user);
+		expect(cb2).toHaveBeenCalledWith(user);
+	});
+	describe('unsubscribe event LOGIN with cb1,',function(){
+		beforeAll(function(){
+			observer.unsubscribe('LOGIN',cb1);
+		});
+		it('publish LOGIN event, cb2 should be called',function(){
+			observer.publish('LOGIN',user);
+			expect(cb2).toHaveBeenCalledWith(user);
+		});
+		it('call showEvents should return an array with LOGIN string',function(){
+			expect(observer.showEvents()).toEqual(['LOGIN']);
+		});
+		describe('unsubscribe LOGIN event with cb2,',function(){
+			beforeAll(function(){
+				observer.unsubscribe('LOGIN',cb2);
+			});
+			it('call showEvents should return an empty array',function(){
+				expect(observer.showEvents()).toEqual([]);
+			});
+			it('publish LOGIN event should throw an error',function(){
+				expect(function(){observer.publish('LOGIN',user)}).toThrowError(Error,'no LOGIN event');
+			});
+		});
+	})
+})
