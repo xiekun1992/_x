@@ -1,25 +1,25 @@
 {
-  "name": "sub-pub",
+  "name": "xjoy",
   "version": "1.0.0",
   "description": "a subscriber and publisher module using observer pattern",
-  "main": "index.js",
+  "main": "./src/xjoy.js",
   "scripts": {
-    "test": "karma start karma.conf.js --single-run",
-    "karma": "karma start karma.conf.js --auto-watch"
+    "test": "karma start karma.conf.js --single-run"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xiekun1992/sub-pub.git"
+    "url": "git+https://github.com/xiekun1992/xjoy.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xiekun1992/sub-pub/issues"
+    "url": "https://github.com/xiekun1992/xjoy/issues"
   },
-  "homepage": "https://github.com/xiekun1992/sub-pub#readme",
+  "homepage": "https://github.com/xiekun1992/xjoy#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-header": "^1.7.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.5.3",
     "jasmine-core": "^2.4.1",
