@@ -19,6 +19,9 @@
   },
   "homepage": "https://github.com/xiekun1992/sub-pub#readme",
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.21",
     "karma-chrome-launcher": "^0.2.2",
