@@ -13,7 +13,7 @@ var _x = (function(_x){
 			}else{
 				throw new Error('no '+eventName+' event');
 			}
-		}
+		};
 		this.unsubscribe=function(eventName,callback){
 			if(typeof eventName !== 'string'){
 				throw new TypeError('eventName should be a string');
@@ -34,7 +34,7 @@ var _x = (function(_x){
 			}else{
 				throw new Error('no '+eventName+' event');
 			}
-		}
+		};
 		this.subscribe=function(eventName,callback){
 			if(typeof eventName !== 'string'){
 				throw new TypeError('eventName should be a string');
@@ -46,22 +46,22 @@ var _x = (function(_x){
 				events[eventName]=[];
 			}
 			events[eventName].push(callback);
-		}
+		};
 		this.showEvents=function(){
 			var ets=[];
 			for(var e in events){
 				ets.push(e);
 			}
 			return ets;
-		}
+		};
 
 		return {
 			publish:this.publish,
 			unsubscribe:this.unsubscribe,
 			subscribe:this.subscribe,
 			showEvents:this.showEvents
-		}
-	}
+		};
+	};
 	
 	return _x;
 })(window._x || {});
