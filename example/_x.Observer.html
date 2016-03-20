@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test for _x.Observer</title>
+</head>
+<body>
+	<form onsubmit="login(event,form)" name="form" id="form">
+		<input type="text" name="username">
+		<input type="password" name="password">
+		<button type="submit">Login</button>
+	</form>
+	<div id="userStatus"></div>
+	<p>
+		<!-- <button onclick="showEvents()">show subscribed events</button> -->
+		<div id="events"></div>
+	</p>
+	<script src="../build/_x.min.js"></script>
+	<script>
+	var observer=new _x.Observer();
+	var form=document.getElementById('form');
+	var userStatus=document.getElementById('userStatus');
+	var events=document.getElementById('events');
+	function login(e,form){
+		e.preventDefault();
+		observer.publish('onlogin',{username:form.username.value,password:form.password.value});
+	}
+	function logout(){
+		observer.publish('onlogout');
+	}
+	function showEvents(){
+		var estr="subscribed events: ",es=observer.showEvents();
+		for(var i=0;i<es.length;i++){
+			estr+=es[i]+" ";
+		}
+		events.innerHTML=estr;
+	}
+	function onloginCb(data){
+		form.style.display='none';
+		userStatus.innerHTML="user: "+data.username+" has logged in with password: "+data.password+"&nbsp;<button onclick='logout()'>logout</button>";
+		observer.unsubscribe('onlogin',onloginCb);
+		showEvents();
+	}
+	function onlogoutCb(){
+		userStatus.innerHTML='';
+		form.style.display='block';
+		observer.unsubscribe('onlogout',onlogoutCb);
+		showEvents();
+	}
+	observer.subscribe('onlogin',onloginCb);
+	observer.subscribe('onlogout',onlogoutCb);
+	showEvents();
+	</script>
+</body>
+</html>
