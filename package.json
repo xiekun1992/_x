@@ -1,6 +1,6 @@
 {
   "name": "xjoy",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "a subscriber and publisher module using observer pattern",
   "main": "./src/xjoy.js",
   "scripts": {
