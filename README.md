@@ -5,5 +5,4 @@
 a tool set for personal study,contains:
 <ul>
 	<li>a subscriber and publisher module using observer pattern</li>
-	<li></li>
 </ul>
