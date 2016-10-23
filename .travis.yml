@@ -5,13 +5,13 @@ node_js:
 
 # http://blog.500tech.com/setting-up-travis-ci-to-run-tests-on-latest-google-chrome-version/
 # by default trvis-ci only have FireFox presented,this settings install Chrome before testing
-before_install:  
-- export CHROME_BIN=/usr/bin/google-chrome
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- sudo apt-get update
-- sudo apt-get upgrade -y libstdc++6
-- sudo apt-get upgrade -y lsb-base
-- sudo apt-get install -y libappindicator1 fonts-liberation
-- wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-- sudo dpkg -i google-chrome*.deb
+# before_install:  
+# - export CHROME_BIN=/usr/bin/google-chrome
+# - export DISPLAY=:99.0
+# - sh -e /etc/init.d/xvfb start
+# - sudo apt-get update
+# - sudo apt-get upgrade -y libstdc++6
+# - sudo apt-get upgrade -y lsb-base
+# - sudo apt-get install -y libappindicator1 fonts-liberation
+# - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+# - sudo dpkg -i google-chrome*.deb
