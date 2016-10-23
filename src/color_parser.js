@@ -50,3 +50,4 @@ ColorParser.prototype.hexToRgb=function(hex){
 	return rgb;
 };
 
+// http://www.360doc.com/content/14/0814/15/1771496_401804348.shtml
