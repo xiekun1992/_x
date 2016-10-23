@@ -1,9 +1,9 @@
 sudo:required
 dist:trusty
-language: node_js
-sudo: true  
-node_js:
-- stable
+# language: node_js
+# sudo: true  
+# node_js:
+# - stable
 
 # http://blog.500tech.com/setting-up-travis-ci-to-run-tests-on-latest-google-chrome-version/
 # by default trvis-ci only have FireFox presented,this settings install Chrome before testing
