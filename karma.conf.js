@@ -46,6 +46,7 @@ module.exports = function(config) {
     plugins:[
         require('karma-jasmine'),
         require('karma-chrome-launcher'),
+        require('karma-firefox-launcher'),
         require('karma-coverage')
     ],
     // web server port
@@ -95,6 +96,7 @@ module.exports = function(config) {
         require('karma-coverage')
     ];
     configuration.browsers=['Firefox_travis_ci'];
+    configuration.reporters=['dots','coverage'];
   }
 
   config.set(configuration);
