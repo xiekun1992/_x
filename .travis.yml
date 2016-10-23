@@ -6,6 +6,10 @@ node_js:
 addons:
   firefox: latest
 
+before_script:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+
 # http://blog.500tech.com/setting-up-travis-ci-to-run-tests-on-latest-google-chrome-version/
 # by default trvis-ci only have FireFox presented,this settings install Chrome before testing
 # before_install:  
