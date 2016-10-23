@@ -69,8 +69,12 @@ module.exports = function(config) {
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
     customLaunchers:{
-        Chrome_travis_ci:{
-            base:'Chrome',
+        // Chrome_travis_ci:{
+        //     base:'Chrome',
+        //     flags:['--no-sandbox']
+        // }
+        Firefox_travis_ci:{
+            base:'Firefox',
             flags:['--no-sandbox']
         }
     },
@@ -85,7 +89,12 @@ module.exports = function(config) {
   };
 
   if(process.env.TRAVIS){
-    configuration.browsers=['Chrome_travis_ci'];
+    configuration.plugins=[
+        require('karma-jasmine'),
+        require('karma-firefox-launcher'),
+        require('karma-coverage')
+    ];
+    configuration.browsers=['Firefox_travis_ci'];
   }
 
   config.set(configuration);
