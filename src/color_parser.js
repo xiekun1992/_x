@@ -36,6 +36,42 @@ function ColorParser(){
 		return hex;
 	};
 
+	var parseRgbToHsl=function(){
+		var rgb = checkRgbValue.apply(null, arguments);
+		var r = rgb[0], g = rgb[1], b = rgb[2];
+		var max = Math.max(r, g, b);
+		var min = Math.min(r, g, b);
+		var h, s, l;
+
+
+		// calculate h, 0 < h < 360
+		switch(max){
+			case min: h = 0;break;
+			case r: 
+				if(g>=b){
+					h = 60 * (g - b) / (max - min);
+				}else{
+					h = 60 * (g - b) / (max - min) + 360;
+				}
+				break;
+			case g: h = 60 * (b - r) / (max - min) + 120;break;
+			case b: h = 60 * (r - g) / (max - min) + 240;break;
+		}
+		// calculate l, 0 < l < 1
+		l = (max + min) / 2;
+		l = l / 255 ;
+		// calculate s, 0 < s < 1
+		if(l > 1 / 2){// l > 1/2
+			s = (max - min) / (2 - (max + min));
+		}else if(l > 0){// 0 < l < 1/2
+			s = (max - min) / (max + min);
+		}else{// l == 0 
+			s = 0;
+		}
+	
+		return 'hsl(' + Math.round(h) + ', ' + Math.round(s * 100) + '%, ' + Math.round(l * 100) + '%)';
+	};
+
 	var checkRgbValue=function(){
 		var rgbArray=[].slice.call(arguments), rgbValue=[];
 		for(var i = 0;i < rgbArray.length;i++){
@@ -77,7 +113,6 @@ function ColorParser(){
 				throw new Error('rgb value should be a unsigned integer number.');
 			}
 		}
-		return ;
 	};
 
 	ColorParser.prototype.hexToRgb=function(hex){
@@ -106,11 +141,11 @@ function ColorParser(){
 	};
 
 	ColorParser.prototype.rgbToHsl=function(){
-
+		return parseRgbToHsl.apply(null, extractRgbValue.apply(null, arguments));
 	};
 
 	ColorParser.prototype.rgbToHex=function(){
-		return parseRgbToHex.apply(null, extractRgbValue.apply(null,arguments));
+		return parseRgbToHex.apply(null, extractRgbValue.apply(null, arguments));
 	};
 
 	ColorParser.prototype.rgbToHsv=function(){

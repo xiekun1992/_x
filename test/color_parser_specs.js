@@ -106,10 +106,10 @@ describe('color_parser test, ',function(){
 					colorParser.rgbToHex("",220,255);
 				}).toThrowError(Error,'rgb value should be a unsigned integer number.');
 			});
-			it('given `-0,220,255`, should throw an error',function(){
+			it('given `-0,220,255`, should parsed to `#00dcff`',function(){
 				expect(colorParser.rgbToHex(-0,220,255)).toEqual('#00dcff');
 			});
-			it('given `+0,220,255`, should throw an error',function(){
+			it('given `+0,220,255`, should parsed to `#00dcff`',function(){
 				expect(colorParser.rgbToHex(+0,220,255)).toEqual('#00dcff');
 			});
 			it('given `360,220,255`, should throw an error',function(){
@@ -185,8 +185,32 @@ describe('color_parser test, ',function(){
 			it('given `Rgb(61, 107, 167)`, should parsed to `hsl(214, 46%, 45%)`',function(){
 				expect(colorParser.rgbToHsl('Rgb(61, 107, 167)')).toEqual('hsl(214, 46%, 45%)');
 			});
+			it('given `rGb(255, 255, 255)`, should parsed to `hsl(0, 0%, 100%)`',function(){
+				expect(colorParser.rgbToHsl('rgb(255, 255, 255)')).toEqual('hsl(0, 0%, 100%)');
+			});
+			it('given `rgB(84, 88, 62)`, should parsed to `hsl(69, 17%, 29%)`',function(){
+				expect(colorParser.rgbToHsl('rgb(84, 88, 62)')).toEqual('hsl(69, 17%, 29%)');
+			});
 			it('given `61, 107, 167`, should parsed to `hsl(214, 46%, 45%)`',function(){
 				expect(colorParser.rgbToHsl(61, 107, 167)).toEqual('hsl(214, 46%, 45%)');
+			});
+			it('given `149, 98, 53`, should parsed to `hsl(28, 48%, 40%)`',function(){
+				expect(colorParser.rgbToHsl(149, 98, 53)).toEqual('hsl(28, 48%, 40%)');
+			});
+			it('given `0, 0, 0`, should parsed to `hsl(0, 0%, 0%)`',function(){
+				expect(colorParser.rgbToHsl(0, 0, 0)).toEqual('hsl(0, 0%, 0%)');
+			});
+			it('given `255, 255, 255`, should parsed to `hsl(0, 0%, 0%)`',function(){
+				expect(colorParser.rgbToHsl(255, 255, 255)).toEqual('hsl(0, 0%, 100%)');
+			});
+			it('given `94, 106, 116`, should parsed to `hsl(207, 10%, 41%)`',function(){
+				expect(colorParser.rgbToHsl(94, 106, 116)).toEqual('hsl(207, 10%, 41%)');
+			});
+			it('given `144, 97, 141`, should parsed to `hsl(304, 20%, 47%)`',function(){
+				expect(colorParser.rgbToHsl(144, 97, 141)).toEqual('hsl(304, 20%, 47%)');
+			});
+			it('given `255, 0, 255`, should parsed to `hsl(300, 100%, 50%)`',function(){
+				expect(colorParser.rgbToHsl(255, 0, 255)).toEqual('hsl(300, 100%, 50%)');
 			});
 		});
 		describe('parsed to hsv',function(){
