@@ -27,7 +27,17 @@ function ColorParser(){
 	};
 
 	var parseRgbToHex=function(){
-		var rgbArray=[].slice.call(arguments), hex='#';
+		var hex='#';
+		var rgb = checkRgbValue.apply(null, arguments);
+		for(var i =0;i<rgb.length;i++){
+			var rgbNumber=rgb[i];
+			hex += table[(rgbNumber / 16) & ~0] + '' + table[rgbNumber % 16];
+		}
+		return hex;
+	};
+
+	var checkRgbValue=function(){
+		var rgbArray=[].slice.call(arguments), rgbValue=[];
 		for(var i = 0;i < rgbArray.length;i++){
 			var rgbNumber = parseInt(rgbArray[i]);
 			// is a number, but exceed 0 ~ 255
@@ -35,10 +45,39 @@ function ColorParser(){
 				throw new Error('rgb value should between 0 and 255.');
 			}else{
 				// regular rgb number 
-				hex += table[(rgbNumber / 16) & ~0] + '' + table[rgbNumber % 16];
+				rgbValue.push(rgbNumber);
 			}
 		}
-		return hex;
+		return rgbValue;
+	};
+
+	var extractRgbValue=function(){
+		// allow rgb(61,107,167) or rgb(61, 107, 167) or 61, 107, 167 as parameter
+		var params=[].slice.call(arguments), regx=/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/i, res;
+		if(params.length != 1 && params.length != 3){
+			throw new Error('rgbToHex should be called like rgbToHex("rgb(0, 0, 0)") or rgbToHex(0, 0, 0).');
+		}
+		if(params.length == 1){
+			if(typeof params[0] !== 'string'){
+				throw new Error('rgbToHex parameter should be a string.');
+			}
+			res=regx.exec(params[0]);
+			if(res){
+				return res.slice(1);
+			}else{
+				throw new Error('rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
+			}
+		}else{
+			// [-0, 1, 1].toString() => "0,1,1" the same as [+0, 1, 1].toString()
+			// -0===-0 and -0===0 and -0===+0
+			res=/^(\d+),\s*(\d+),\s*(\d+)$/.exec(params.toString());
+			if(res){
+				return params;
+			}else{
+				throw new Error('rgb value should be a unsigned integer number.');
+			}
+		}
+		return ;
 	};
 
 	ColorParser.prototype.hexToRgb=function(hex){
@@ -71,32 +110,7 @@ function ColorParser(){
 	};
 
 	ColorParser.prototype.rgbToHex=function(){
-		// allow rgb(61,107,167) or rgb(61, 107, 167) or 61, 107, 167 as parameter
-		var params=[].slice.call(arguments), regx=/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/i, hex;
-		if(params.length != 1 && params.length != 3){
-			throw new Error('rgbToHex should be called like rgbToHex("rgb(0, 0, 0)") or rgbToHex(0, 0, 0).');
-		}
-		if(params.length == 1){
-			if(typeof params[0] !== 'string'){
-				throw new Error('rgbToHex parameter should be a string.');
-			}
-			var res=regx.exec(params[0]);
-			if(res){
-				hex=parseRgbToHex.call(null, res[1], res[2], res[3]);
-			}else{
-				throw new Error('rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
-			}
-		}else{
-			// [-0, 1, 1].toString() => "0,1,1" the same as [+0, 1, 1].toString()
-			// -0===-0 and -0===0 and -0===+0
-			var res=/^(\d+),\s*(\d+),\s*(\d+)$/.exec(params.toString());
-			if(res){
-				hex=parseRgbToHex.call(null, params[0], params[1], params[2]);
-			}else{
-				throw new Error('rgb value should be a unsigned integer number.');
-			}
-		}
-		return hex;
+		return parseRgbToHex.apply(null, extractRgbValue.apply(null,arguments));
 	};
 
 	ColorParser.prototype.rgbToHsv=function(){

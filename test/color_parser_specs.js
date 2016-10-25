@@ -178,10 +178,18 @@ describe('color_parser test, ',function(){
 				}).toThrowError(Error,'rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
 			});
 		});
-		it('parsed to hsl',function(){
-
+		describe('parsed to hsl',function(){
+			it('given `rgb(61, 107, 167)`, should parsed to `hsl(214, 46%, 45%)`',function(){
+				expect(colorParser.rgbToHsl('rgb(61, 107, 167)')).toEqual('hsl(214, 46%, 45%)');
+			});
+			it('given `Rgb(61, 107, 167)`, should parsed to `hsl(214, 46%, 45%)`',function(){
+				expect(colorParser.rgbToHsl('Rgb(61, 107, 167)')).toEqual('hsl(214, 46%, 45%)');
+			});
+			it('given `61, 107, 167`, should parsed to `hsl(214, 46%, 45%)`',function(){
+				expect(colorParser.rgbToHsl(61, 107, 167)).toEqual('hsl(214, 46%, 45%)');
+			});
 		});
-		it('parsed to hsv',function(){
+		describe('parsed to hsv',function(){
 
 		});
 	});
