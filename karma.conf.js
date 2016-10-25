@@ -63,7 +63,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // start these browsers
@@ -97,6 +97,7 @@ module.exports = function(config) {
     ];
     configuration.browsers=['Firefox_travis_ci'];
     configuration.reporters=['dots','coverage'];
+    configuration.autoWatch=false;
   }
 
   config.set(configuration);

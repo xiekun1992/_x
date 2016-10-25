@@ -76,6 +76,16 @@ describe('color_parser test, ',function(){
 					colorParser.rgbToHex(255,0);
 				}).toThrowError(Error,'rgbToHex should be called like rgbToHex("rgb(0, 0, 0)") or rgbToHex(0, 0, 0).');
 			});
+			it('given `255.1,2,2`, should throw an error',function(){
+				expect(function(){
+					colorParser.rgbToHex(255.1,2,2);
+				}).toThrowError(Error,'rgb value should be a unsigned integer number.');
+			});
+			it('given `NaN,2,2`, should throw an error',function(){
+				expect(function(){
+					colorParser.rgbToHex(255.1,2,2);
+				}).toThrowError(Error,'rgb value should be a unsigned integer number.');
+			});
 			it('given `255`, should throw an error',function(){
 				expect(function(){
 					colorParser.rgbToHex(255);
@@ -91,6 +101,22 @@ describe('color_parser test, ',function(){
 					colorParser.rgbToHex('abc',220,255);
 				}).toThrowError(Error,'rgb value should be a unsigned integer number.');
 			});
+			it('given `"",220,255`, should throw an error',function(){
+				expect(function(){
+					colorParser.rgbToHex("",220,255);
+				}).toThrowError(Error,'rgb value should be a unsigned integer number.');
+			});
+			it('given `-0,220,255`, should throw an error',function(){
+				expect(colorParser.rgbToHex(-0,220,255)).toEqual('#00dcff');
+			});
+			it('given `+0,220,255`, should throw an error',function(){
+				expect(colorParser.rgbToHex(+0,220,255)).toEqual('#00dcff');
+			});
+			it('given `360,220,255`, should throw an error',function(){
+				expect(function(){
+					colorParser.rgbToHex(360,220,255);
+				}).toThrowError(Error,'rgb value should between 0 and 255.');
+			});
 			it('given `[1,2,3],233,2`,should throw an error',function(){
 				expect(function(){
 					colorParser.rgbToHex([1,2,3],233,2);
@@ -104,12 +130,12 @@ describe('color_parser test, ',function(){
 			it('given `RGB({a:1},233,2)`,should throw an error',function(){
 				expect(function(){
 					colorParser.rgbToHex('RGB({a:1},233,2)');
-				}).toThrowError(Error,'rgb value should be a unsigned integer number.');
+				}).toThrowError(Error,'rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
 			});
 			it('given `RGB(,233,2)`,should throw an error',function(){
 				expect(function(){
 					colorParser.rgbToHex('RGB(,233,2)');
-				}).toThrowError(Error,'rgb value should be a unsigned integer number.');
+				}).toThrowError(Error,'rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
 			});
 			it('given `RGB(400,233,2)`,should throw an error',function(){
 				expect(function(){
@@ -119,27 +145,37 @@ describe('color_parser test, ',function(){
 			it('given `RGB(-1,233,2)`,should throw an error',function(){
 				expect(function(){
 					colorParser.rgbToHex('RGB(-1,233,2)');
-				}).toThrowError(Error,'rgb value should be a unsigned integer number.');
+				}).toThrowError(Error,'rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
 			});
 			it('given `RGB(+1,233,2)`,should throw an error',function(){
 				expect(function(){
 					colorParser.rgbToHex('RGB(+1,233,2)');
-				}).toThrowError(Error,'rgb value should be a unsigned integer number.');
+				}).toThrowError(Error,'rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
 			});
 			it('given `RGB(x,233,2)`,should throw an error',function(){
 				expect(function(){
 					colorParser.rgbToHex('RGB(x,233,2)');
-				}).toThrowError(Error,'rgb value should be a unsigned integer number.');
+				}).toThrowError(Error,'rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
 			});
 			it('given `RGB(-,233,2)`,should throw an error',function(){
 				expect(function(){
 					colorParser.rgbToHex('RGB(-,233,2)');
-				}).toThrowError(Error,'rgb value should be a unsigned integer number.');
+				}).toThrowError(Error,'rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
 			});
 			it('given `RGB(1.1,233,2)`,should throw an error',function(){
 				expect(function(){
 					colorParser.rgbToHex('RGB(1.1,233,2)');
-				}).toThrowError(Error,'rgb value should be a unsigned integer number.');
+				}).toThrowError(Error,'rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
+			});
+			it('given `RGB(NaN,233,2)`,should throw an error',function(){
+				expect(function(){
+					colorParser.rgbToHex('RGB(NaN,233,2)');
+				}).toThrowError(Error,'rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
+			});
+			it('given `RGB("",233,2)`,should throw an error',function(){
+				expect(function(){
+					colorParser.rgbToHex('RGB("",233,2)');
+				}).toThrowError(Error,'rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
 			});
 		});
 		it('parsed to hsl',function(){

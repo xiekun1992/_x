@@ -26,22 +26,16 @@ function ColorParser(){
 		return 'rgb(' + red + ', ' + green + ', ' + blue+')';
 	};
 
-	var parseRgbToHex=function(value){
-		// value is like `0,0,0` or `0, 0, 0`, received value may be `abc, def, ghi`, `abc, 213, dds` and so on
-		var rgbArray=value.replace(/(,\s)|,/g,' ').split(' '), hex='#';
+	var parseRgbToHex=function(){
+		var rgbArray=[].slice.call(arguments), hex='#';
 		for(var i = 0;i < rgbArray.length;i++){
 			var rgbNumber = parseInt(rgbArray[i]);
-			if(rgbNumber !== rgbNumber){
-				// parsed to NAN, is not a number
-				throw new Error('rgb value should be a unsigned integer number.');
+			// is a number, but exceed 0 ~ 255
+			if(rgbNumber < 0 || rgbNumber > 255){
+				throw new Error('rgb value should between 0 and 255.');
 			}else{
-				// is a number, but exceed 0 ~ 255
-				if(rgbNumber < 0 || rgbNumber > 255){
-					throw new Error('rgb value should between 0 and 255.');
-				}else{
-					// regular rgb number 
-					hex += table[(rgbNumber / 16) & ~0] + '' + table[rgbNumber % 16];
-				}
+				// regular rgb number 
+				hex += table[(rgbNumber / 16) & ~0] + '' + table[rgbNumber % 16];
 			}
 		}
 		return hex;
@@ -78,7 +72,7 @@ function ColorParser(){
 
 	ColorParser.prototype.rgbToHex=function(){
 		// allow rgb(61,107,167) or rgb(61, 107, 167) or 61, 107, 167 as parameter
-		var params=[].slice.call(arguments), regx=/^rgb\(([\s\S]+)\)$/i, hex;
+		var params=[].slice.call(arguments), regx=/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/i, hex;
 		if(params.length != 1 && params.length != 3){
 			throw new Error('rgbToHex should be called like rgbToHex("rgb(0, 0, 0)") or rgbToHex(0, 0, 0).');
 		}
@@ -88,23 +82,19 @@ function ColorParser(){
 			}
 			var res=regx.exec(params[0]);
 			if(res){
-				// res[1] may be `[1,2], 2, 3` or any other 
-				for(var i = 0;i < res[1].length;i++){
-					if(res[1].charAt(i) != ' ' && res[1].charAt(i) != ',' && (res[1].charAt(i) < '0' || res[1].charAt(i) > '9')){
-						throw new Error('rgb value should be a unsigned integer number.');
-					}
-				}
-				hex=parseRgbToHex(res[1]);
+				hex=parseRgbToHex.call(null, res[1], res[2], res[3]);
 			}else{
 				throw new Error('rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
 			}
 		}else{
-			for(var i = 0;i < params.length;i++){
-				if(typeof params[i] !== 'number'){
-					throw new Error('rgb value should be a unsigned integer number.');
-				}
+			// [-0, 1, 1].toString() => "0,1,1" the same as [+0, 1, 1].toString()
+			// -0===-0 and -0===0 and -0===+0
+			var res=/^(\d+),\s*(\d+),\s*(\d+)$/.exec(params.toString());
+			if(res){
+				hex=parseRgbToHex.call(null, params[0], params[1], params[2]);
+			}else{
+				throw new Error('rgb value should be a unsigned integer number.');
 			}
-			hex=parseRgbToHex(params.join(','));
 		}
 		return hex;
 	};
