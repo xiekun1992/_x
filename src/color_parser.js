@@ -31,7 +31,7 @@ function ColorParser(){
 		var rgb = checkRgbValue.apply(null, arguments);
 		for(var i =0;i<rgb.length;i++){
 			var rgbNumber=rgb[i];
-			hex += table[(rgbNumber / 16) & ~0] + '' + table[rgbNumber % 16];
+			hex += table[(rgbNumber / 16) & ~0] + '' + table[rgbNumber % 16];//rgbNumber.toString(16); error: 0 => '0' instead of '00'
 		}
 		return hex;
 	};
@@ -44,7 +44,7 @@ function ColorParser(){
 		var h, s, l;
 
 
-		// calculate h, 0 < h < 360
+		// calculate h, 0 <= h < 360
 		switch(max){
 			case min: h = 0;break;
 			case r: 
@@ -57,10 +57,10 @@ function ColorParser(){
 			case g: h = 60 * (b - r) / (max - min) + 120;break;
 			case b: h = 60 * (r - g) / (max - min) + 240;break;
 		}
-		// calculate l, 0 < l < 1
+		// calculate l, 0 <= l <= 1
 		l = (max + min) / 2;
 		l = l / 255 ;
-		// calculate s, 0 < s < 1
+		// calculate s, 0 <= s <= 1
 		if(l > 1 / 2){// l > 1/2
 			s = (max - min) / (2 - (max + min));
 		}else if(l > 0){// 0 < l < 1/2
@@ -140,16 +140,67 @@ function ColorParser(){
 		return rgb;
 	};
 
-	ColorParser.prototype.rgbToHsl=function(){
-		return parseRgbToHsl.apply(null, extractRgbValue.apply(null, arguments));
-	};
-
 	ColorParser.prototype.rgbToHex=function(){
 		return parseRgbToHex.apply(null, extractRgbValue.apply(null, arguments));
 	};
 
-	ColorParser.prototype.rgbToHsv=function(){
-
+	ColorParser.prototype.rgbToHsl=function(){
+		return parseRgbToHsl.apply(null, extractRgbValue.apply(null, arguments));
 	};
+
+	ColorParser.prototype.hslToRgb=function(){
+		var params=[].slice.call(arguments), regx=/^hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)$/, res, r, g, b;
+		res = regx.exec(params[0]);
+		if(res){
+			var h = parseInt(res[1]), s = parseInt(res[2]) / 100, l = parseInt(res[3]) / 100;
+			if(s == 0){
+				r = g = b = 255 * l;
+			}else{
+				var q, p, hk, tr, tg, tb;
+				if(l < 1/2){
+					q = l * (1 + s);
+				}else{
+					q = l + s - (l * s);
+				}
+				p = 2 * l - q;
+				hk = h / 360;
+				tr = (3 * hk + 1)/3;
+				tg = hk;
+				tb = (3 * hk - 1)/3;
+
+				console.log(hk, tr, tg, tb)
+				var rgb = [tr, tg, tb];
+
+				for(var i = 0;i < rgb.length;i++){
+					if(rgb[i] < 0){
+						rgb[i] += 1;
+					}else if(rgb[i] > 1){
+						rgb[i] -= 1;
+					}
+					console.log(rgb[i]);
+
+					if(rgb[i] * 6 < 1){
+						rgb[i] = p + ((q - p) * 6 * rgb[i]);
+					}else if(rgb[i] < 1/2){
+						rgb[i] = q;
+					}else if(rgb[i] * 3 < 2){
+						rgb[i] = p + ((q - p) * 6 * (2/3 - rgb[i]));
+					}else{
+						rgb[i] = p;
+					}
+					console.log(rgb[i]);
+				}
+
+				r = rgb[0];
+				g = rgb[1];
+				b = rgb[2];
+			}
+		}
+		return 'rgb(' + Math.round(r * 255) + ', ' + Math.round(g * 255) + ', ' + Math.round(b * 255) + ')';
+	};
+
+	// ColorParser.prototype.rgbToHsv=function(){
+
+	// };
 }
 // http://www.360doc.com/content/14/0814/15/1771496_401804348.shtml
