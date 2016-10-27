@@ -5,6 +5,8 @@ node_js:
 
 addons:
   firefox: latest
+  code_climate:
+    repo_token: 6daebca693f2332ee6bc3d0f073df118f7a03c6cc44e7c8a7885a59e33f6b279
 
 before_script:
 - export DISPLAY=:99.0

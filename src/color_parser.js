@@ -2,6 +2,7 @@
 
 function ColorParser(){
 	var table = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
+	var regx, methodName;
 
 	var parseHexToRgb=function(value){
 		var hex;
@@ -21,7 +22,6 @@ function ColorParser(){
 		var red = table.indexOf(hex[0]) * 16 + table.indexOf(hex[1]) * 1,
 			green = table.indexOf(hex[2]) * 16 + table.indexOf(hex[3]) * 1,
 			blue = table.indexOf(hex[4]) * 16 + table.indexOf(hex[5]) * 1;
-
 
 		return 'rgb(' + red + ', ' + green + ', ' + blue+')';
 	};
@@ -88,21 +88,21 @@ function ColorParser(){
 		return rgbValue;
 	};
 
-	var extractRgbValue=function(){
+	var extractColorValue=function(){
 		// allow rgb(61,107,167) or rgb(61, 107, 167) or 61, 107, 167 as parameter
-		var params=[].slice.call(arguments), regx=/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/i, res;
+		var params=[].slice.call(arguments), res;
 		if(params.length != 1 && params.length != 3){
-			throw new Error('rgbToHex should be called like rgbToHex("rgb(0, 0, 0)") or rgbToHex(0, 0, 0).');
+			throw new Error(methodName + ' should be called like ' + methodName + '("rgb(0, 0, 0)") or ' + methodName + '(0, 0, 0).');
 		}
 		if(params.length == 1){
 			if(typeof params[0] !== 'string'){
-				throw new Error('rgbToHex parameter should be a string.');
+				throw new Error(methodName + ' parameter should be a string.');
 			}
 			res=regx.exec(params[0]);
 			if(res){
 				return res.slice(1);
 			}else{
-				throw new Error('rgbToHex should be called like rgbToHex("rgb(0, 0, 0)").');
+				throw new Error(methodName + ' should be called like ' + methodName + '("rgb(0, 0, 0)").');
 			}
 		}else{
 			// [-0, 1, 1].toString() => "0,1,1" the same as [+0, 1, 1].toString()
@@ -111,7 +111,7 @@ function ColorParser(){
 			if(res){
 				return params;
 			}else{
-				throw new Error('rgb value should be a unsigned integer number.');
+				throw new Error('color value should be a unsigned integer number.');
 			}
 		}
 	};
@@ -142,11 +142,15 @@ function ColorParser(){
 	};
 
 	ColorParser.prototype.rgbToHex=function(){
-		return parseRgbToHex.apply(null, extractRgbValue.apply(null, arguments));
+		regx = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/i;
+		methodName = 'rgbToHex';
+		return parseRgbToHex.apply(null, extractColorValue.apply(null, arguments));
 	};
 
 	ColorParser.prototype.rgbToHsl=function(){
-		return parseRgbToHsl.apply(null, extractRgbValue.apply(null, arguments));
+		regx=/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/i;
+		methodName = 'rgbToHsl';
+		return parseRgbToHsl.apply(null, extractColorValue.apply(null, arguments));
 	};
 
 	ColorParser.prototype.hslToRgb=function(){
