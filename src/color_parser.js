@@ -77,6 +77,7 @@ function ColorParser(){
 		for(var i = 0;i < rgbArray.length;i++){
 			var rgbNumber = parseInt(rgbArray[i]);
 			// is a number, but exceed 0 ~ 255
+			// console.log(rgbNumber)
 			if(rgbNumber < 0 || rgbNumber > 255){
 				throw new Error('rgb value should between 0 and 255.');
 			}else{
@@ -154,7 +155,7 @@ function ColorParser(){
 		if(res){
 			var h = parseInt(res[1]), s = parseInt(res[2]) / 100, l = parseInt(res[3]) / 100;
 			if(s == 0){
-				r = g = b = 255 * l;
+				r = g = b = l;
 			}else{
 				var q, p, hk, tr, tg, tb;
 				if(l < 1/2){
@@ -168,7 +169,7 @@ function ColorParser(){
 				tg = hk;
 				tb = (3 * hk - 1)/3;
 
-				console.log(hk, tr, tg, tb)
+				// console.log(hk, tr, tg, tb)
 				var rgb = [tr, tg, tb];
 
 				for(var i = 0;i < rgb.length;i++){
@@ -177,7 +178,7 @@ function ColorParser(){
 					}else if(rgb[i] > 1){
 						rgb[i] -= 1;
 					}
-					console.log(rgb[i]);
+					// console.log(rgb[i]);
 
 					if(rgb[i] * 6 < 1){
 						rgb[i] = p + ((q - p) * 6 * rgb[i]);
@@ -188,19 +189,28 @@ function ColorParser(){
 					}else{
 						rgb[i] = p;
 					}
-					console.log(rgb[i]);
+					// console.log(rgb[i]*255);
 				}
 
 				r = rgb[0];
 				g = rgb[1];
 				b = rgb[2];
 			}
+		}else{
+			throw new Error('hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
 		}
 		return 'rgb(' + Math.round(r * 255) + ', ' + Math.round(g * 255) + ', ' + Math.round(b * 255) + ')';
 	};
 
-	// ColorParser.prototype.rgbToHsv=function(){
+	ColorParser.prototype.hexToHsl=function(){
+		var rgb = this.hexToRgb.apply(this, arguments);
+		return this.rgbToHsl(rgb);
+	};
 
-	// };
+	ColorParser.prototype.hslToHex=function(){
+		var rgb = this.hslToRgb.apply(this, arguments);
+		return this.rgbToHex(rgb);
+	};
 }
+// reference:
 // http://www.360doc.com/content/14/0814/15/1771496_401804348.shtml
