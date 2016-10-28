@@ -154,10 +154,14 @@ function ColorParser(){
 	};
 
 	ColorParser.prototype.hslToRgb=function(){
-		var params=[].slice.call(arguments), regx=/^hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)$/, res, r, g, b;
-		res = regx.exec(params[0]);
-		if(res){
-			var h = parseInt(res[1]), s = parseInt(res[2]) / 100, l = parseInt(res[3]) / 100;
+		var params=[].slice.call(arguments), r, g, b;
+		if(params.length > 0){
+			for(var i = 0;i<params.length;i++){
+				if(typeof params[i] !== 'number' || params[i] !== params[i]){
+					throw new Error('hslToRgb should be called like hslToRgb(h, s, l).');
+				}
+			}
+			var h = parseFloat(params[0]), s = parseFloat(params[1]) / 100, l = parseFloat(params[2]) / 100;
 			if(s == 0){
 				r = g = b = l;
 			}else{
@@ -201,7 +205,7 @@ function ColorParser(){
 				b = rgb[2];
 			}
 		}else{
-			throw new Error('hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+			throw new Error('hslToRgb should be called like hslToRgb(h, s, l).');
 		}
 		return 'rgb(' + Math.round(r * 255) + ', ' + Math.round(g * 255) + ', ' + Math.round(b * 255) + ')';
 	};

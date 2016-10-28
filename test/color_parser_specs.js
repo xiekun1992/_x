@@ -366,114 +366,107 @@ describe('color_parser test, ',function(){
 	// hsl => rgb, hsl => hex
 	describe('when hsl ',function(){
 		describe('parsed to rgb',function(){
-			it('given `hsl(105, 57%, 53%)`,should be parsed to `rgb(102, 204, 68)`',function(){
-				expect(colorParser.hslToRgb('hsl(105, 57%, 53%)')).toEqual('rgb(101, 203, 67)');
+			it('given `105, 57, 53`,should be parsed to `rgb(102, 204, 68)`',function(){
+				expect(colorParser.hslToRgb(105, 57, 53)).toEqual('rgb(101, 203, 67)');
 			});
-			it('given `hsl(357, 95%, 78%)`,should be parsed to `rgb(252, 145, 150)`',function(){
-				expect(colorParser.hslToRgb('hsl(357, 95%, 78%)')).toEqual('rgb(252, 146, 151)');
+			it('given `357, 95, 78)`,should be parsed to `rgb(252, 145, 150)`',function(){
+				expect(colorParser.hslToRgb(357, 95, 78)).toEqual('rgb(252, 146, 151)');
 			});
-			it('given `hsl(357, 65%, 30%)`,should be parsed to `rgb(128, 27, 32)`',function(){
-				expect(colorParser.hslToRgb('hsl(357, 65%, 30%)')).toEqual('rgb(126, 27, 32)');
+			it('given `357, 65, 30`,should be parsed to `rgb(128, 27, 32)`',function(){
+				expect(colorParser.hslToRgb(357, 65, 30)).toEqual('rgb(126, 27, 32)');
 			});
-			it('given `hsl(356, 100%, 6%)`,should be parsed to `rgb(31, 0, 2)`',function(){
-				expect(colorParser.hslToRgb('hsl(356, 100%, 6%)')).toEqual('rgb(31, 0, 2)');
+			it('given `356, 100, 6`,should be parsed to `rgb(31, 0, 2)`',function(){
+				expect(colorParser.hslToRgb(356, 100, 6)).toEqual('rgb(31, 0, 2)');
 			});
-			it('given `hsl(240, 100%, 25%)`,should be parsed to `rgb(0, 0, 128)`',function(){
-				expect(colorParser.hslToRgb('hsl(240, 100%, 25%)')).toEqual('rgb(0, 0, 128)');
+			it('given `240, 100, 25`,should be parsed to `rgb(0, 0, 128)`',function(){
+				expect(colorParser.hslToRgb(240, 100, 25)).toEqual('rgb(0, 0, 128)');
 			});
-			it('given `hsl(20, 20%, 100%)`,should be parsed to `rgb(255, 255, 255)`',function(){
-				expect(colorParser.hslToRgb('hsl(20, 20%, 100%)')).toEqual('rgb(255, 255, 255)');
+			it('given `0, 0, 73.599999999999999999999999999999999999999999999999999999999999999`,should be parsed to `rgb(255, 255, 255)`',function(){
+				expect(colorParser.hslToRgb(0, 0, 73.599999999999999999999999999999999999999999999999999999999999999)).toEqual('rgb(188, 188, 188)');
 			});
-			it('given `hsl(, 100%, 25%)`, should throw an error',function(){
+			it('given `20, 20, 100`,should be parsed to `rgb(255, 255, 255)`',function(){
+				expect(colorParser.hslToRgb(20, 20, 100)).toEqual('rgb(255, 255, 255)');
+			});
+			it('given `"", 100%, 25%`, should throw an error',function(){
 				expect(function(){
-					colorParser.hslToRgb('hsl(, 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
-			});
-			it('given `hsl("", 100%, 25%)`, should throw an error',function(){
-				expect(function(){
-					colorParser.hslToRgb('hsl("", 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+					colorParser.hslToRgb("", 100, 25);
+				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb(h, s, l).');
 			});
 
-			it('given `hsl(null, 100%, 25%)`, should throw an error',function(){
+			it('given `null, 100, 25`, should throw an error',function(){
 				expect(function(){
-					colorParser.hslToRgb('hsl(null, 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+					colorParser.hslToRgb(null, 100, 25);
+				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb(h, s, l).');
 			});
 
-			it('given `hsl(undefined, 100%, 25%)`, should throw an error',function(){
+			it('given `undefined, 100, 25`, should throw an error',function(){
 				expect(function(){
-					colorParser.hslToRgb('hsl(undefined, 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+					colorParser.hslToRgb(undefined, 100, 25);
+				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb(h, s, l).');
 			});
 
-			it('given `hsl({b:2}, 100%, 25%)`, should throw an error',function(){
+			it('given `{b:2}, 100, 25`, should throw an error',function(){
 				expect(function(){
-					colorParser.hslToRgb('hsl({b:2}, 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+					colorParser.hslToRgb({b:2}, 100, 25);
+				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb(h, s, l).');
 			});
 
-			it('given `hsl([1,2], 100%, 25%)`, should throw an error',function(){
+			it('given `[1,2], 100, 25`, should throw an error',function(){
 				expect(function(){
-					colorParser.hslToRgb('hsl([1,2], 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+					colorParser.hslToRgb([1,2], 100, 25);
+				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb(h, s, l).');
 			});
 
-			it('given `hsl(funciton(){}, 100%, 25%)`, should throw an error',function(){
+			it('given `funciton(){}, 100, 25`, should throw an error',function(){
 				expect(function(){
-					colorParser.hslToRgb('hsl(function(){}, 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+					colorParser.hslToRgb('function(){}, 100, 25');
+				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb(h, s, l).');
 			});
 		});
 		describe('parsed to hexadecimal',function(){
-			it('given `hsl(214, 50%, 50%)`,should be parsed to `#4077bf`',function(){
-				expect(colorParser.hslToHex('hsl(214, 50%, 50%)')).toEqual('#4077bf');
+			it('given `214, 50, 50`,should be parsed to `#4077bf`',function(){
+				expect(colorParser.hslToHex(214, 50, 50)).toEqual('#4077bf');
 			});
-			it('given `hsl(0, 0%, 100%)`,should be parsed to `#ffffff`',function(){
-				expect(colorParser.hslToHex('hsl(0, 0%, 100%)')).toEqual('#ffffff');
+			it('given `0, 0, 100`,should be parsed to `#ffffff`',function(){
+				expect(colorParser.hslToHex(0, 0, 100)).toEqual('#ffffff');
 			});
-			it('given `hsl(0, 0%, 0%)`,should be parsed to `#000000`',function(){
-				expect(colorParser.hslToHex('hsl(0, 0%, 0%)')).toEqual('#000000');
+			it('given `0, 0, 0`,should be parsed to `#000000`',function(){
+				expect(colorParser.hslToHex(0, 0, 0)).toEqual('#000000');
 			});
-			it('given `hsl(, 100%, 25%)`, should throw an error',function(){
+			it('given `"", 100%, 25%`, should throw an error',function(){
 				expect(function(){
-					colorParser.hslToRgb('hsl(, 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
-			});
-			it('given `hsl("", 100%, 25%)`, should throw an error',function(){
-				expect(function(){
-					colorParser.hslToRgb('hsl("", 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+					colorParser.hslToRgb("", 100, 25);
+				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb(h, s, l).');
 			});
 
-			it('given `hsl(null, 100%, 25%)`, should throw an error',function(){
+			it('given `null, 100, 25`, should throw an error',function(){
 				expect(function(){
-					colorParser.hslToRgb('hsl(null, 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+					colorParser.hslToRgb(null, 100, 25);
+				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb(h, s, l).');
 			});
 
-			it('given `hsl(undefined, 100%, 25%)`, should throw an error',function(){
+			it('given `undefined, 100, 25`, should throw an error',function(){
 				expect(function(){
-					colorParser.hslToRgb('hsl(undefined, 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+					colorParser.hslToRgb(undefined, 100, 25);
+				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb(h, s, l).');
 			});
 
-			it('given `hsl({b:2}, 100%, 25%)`, should throw an error',function(){
+			it('given `{b:2}, 100, 25`, should throw an error',function(){
 				expect(function(){
-					colorParser.hslToRgb('hsl({b:2}, 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+					colorParser.hslToRgb({b:2}, 100, 25);
+				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb(h, s, l).');
 			});
 
-			it('given `hsl([1,2], 100%, 25%)`, should throw an error',function(){
+			it('given `[1,2], 100, 25`, should throw an error',function(){
 				expect(function(){
-					colorParser.hslToRgb('hsl([1,2], 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+					colorParser.hslToRgb([1,2], 100, 25);
+				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb(h, s, l).');
 			});
 
-			it('given `hsl(funciton(){}, 100%, 25%)`, should throw an error',function(){
+			it('given `funciton(){}, 100, 25`, should throw an error',function(){
 				expect(function(){
-					colorParser.hslToRgb('hsl(function(){}, 100%, 25%)');
-				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb("hsl(0, 0%, 0%)").');
+					colorParser.hslToRgb('function(){}, 100, 25');
+				}).toThrowError(Error, 'hslToRgb should be called like hslToRgb(h, s, l).');
 			});
 		});
 	});
