@@ -1,7 +1,7 @@
 {
   "name": "xjoy",
   "version": "1.1.0",
-  "description": "a subscriber and publisher module using observer pattern",
+  "description": "a toolset for personal use",
   "main": "./src/xjoy.js",
   "scripts": {
     "test": "karma start karma.conf.js --single-run"
@@ -19,7 +19,9 @@
   "homepage": "https://github.com/xiekun1992/xjoy#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
     "gulp-header": "^1.7.1",
+    "gulp-insert": "^0.5.0",
     "gulp-jshint": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.5.3",

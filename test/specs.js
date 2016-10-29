@@ -5,7 +5,7 @@ var observer;
 describe('when initialized,',function(){
 
 	beforeAll(function(){
-		observer=_x.Observer();
+		observer=new Observer();
 	});
 	afterAll(function(){
 		observer=null;
@@ -33,7 +33,7 @@ describe('when subscribe event LOGIN,',function(){
 
 	beforeAll(function(){
 		cb=jasmine.createSpy("cb").and.returnValue(1);
-		observer=_x.Observer();
+		observer=new Observer();
 		spyOn(observer,'subscribe').and.callThrough();
 	});
 	afterAll(function(){
@@ -89,7 +89,7 @@ describe('when subscribe event LOGIN,',function(){
 describe('after subscribe two events LOGIN, LOGOUT,',function(){
 	var cb1,cb2;
 	beforeAll(function(){
-		observer=_x.Observer();
+		observer=new Observer();
 		cb1=jasmine.createSpy("cb1");
 		cb2=jasmine.createSpy("cb2");
 		observer.subscribe('LOGIN',cb1);
@@ -130,7 +130,7 @@ describe('when subscribe duplicate events LOGIN with two different callback func
 	var cb1,cb2;
 	var user;
 	beforeAll(function(){
-		observer=_x.Observer();
+		observer=new Observer();
 		cb1=jasmine.createSpy('cb1');
 		cb2=jasmine.createSpy('cb2');
 		observer.subscribe('LOGIN',cb1);
