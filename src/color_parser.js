@@ -76,7 +76,6 @@ function ColorParser(){
 				throw new TypeError('invalid rgb value.');
 			}
 			var rgbNumber = parseInt(rgbArray[i]);
-			console.log(rgbNumber)
 			if(rgbNumber < 0 || rgbNumber > 255){
 				throw new Error('rgb value should between 0 and 255.');
 			}else{
