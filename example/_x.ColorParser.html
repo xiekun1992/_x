@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test for _x.ColorParser</title>
+</head>
+<body>
+	<div>
+		hexadecimal: <input type="text" id="hex">
+		<button onclick="convertHex()">Convert hex</button>
+		<div id="hexToRgb"></div>
+		<div id="hexToHsl"></div>
+	</div>
+	<div>
+		red: <input type="text" id="r">
+		green: <input type="text" id="g">
+		blue: <input type="text" id="b">
+		<button onclick="convertRgb()">Convert rgb</button>
+		<div id="rgbToHex"></div>
+		<div id="rgbToHsl"></div>
+	</div>
+	<div>
+		hue: <input type="text" id="h">
+		saturation: <input type="text" id="s">%
+		lightness: <input type="text" id="l">%
+		<button onclick="convertHsl()">Convert hsl</button>
+		<div id="hslToHex"></div>
+		<div id="hslToRgb"></div>
+	</div>
+	<script src="../build/_x.min.js"></script>
+	<script>
+	function convertHex(){
+		try{
+			hexToRgb.innerHTML = _x.ColorParser.hexToRgb(hex.value);
+			hexToHsl.innerHTML=_x.ColorParser.hexToHsl(hex.value);
+		}catch(e){
+			hexToRgb.innerHTML = e;
+			hexToHsl.innerHTML = "";
+		}
+	}
+	function convertRgb(){
+		try{
+			rgbToHex.innerHTML = _x.ColorParser.rgbToHex(parseInt(r.value),parseInt(g.value),parseInt(b.value));
+			rgbToHsl.innerHTML = _x.ColorParser.rgbToHsl(parseInt(r.value),parseInt(g.value),parseInt(b.value));
+		}catch(e){
+			rgbToHex.innerHTML = e;
+			rgbToHsl.innerHTML = "";
+		}
+	}
+	function convertHsl(){
+		try{
+			hslToHex.innerHTML = _x.ColorParser.hslToHex(parseInt(h.value),parseInt(s.value),parseInt(l.value));
+			hslToRgb.innerHTML = _x.ColorParser.hslToRgb(parseInt(h.value),parseInt(s.value),parseInt(l.value));
+		}catch(e){
+			hslToHex.innerHTML = e;
+			hslToRgb.innerHTML = "";
+		}
+	}
+	</script>
+</body>
+</html>

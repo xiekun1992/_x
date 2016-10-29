@@ -28,13 +28,11 @@ gulp.task('build',function(){
 	.pipe(uglify())
 	.pipe(insert.transform(function(contents, file){
 		var functions = contents.match(/function (\S+)\(\)/g), modules=[];
-		console.log(functions)
 		for(var i = 0; i < functions.length; i++){
 			var classNames = /^function (\S+)\(\)$/.exec(functions[i]).pop();
 			modules[i] = "_x['" + classNames +"'] = new " + classNames + "()";
 		}
 		var wrapper = "(function(global){'use strict';var _x = {};" + contents + ";" + modules.join(';') + ";global._x = _x;})(window);";
-		// console.log(wrapper);
 		return wrapper;
 	}))
 	.pipe(rename({
