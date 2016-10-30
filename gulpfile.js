@@ -26,17 +26,34 @@ gulp.task('build',function(){
 	gulp.src('./src/**/*.js')
 	.pipe(concat('_x.js'))
 	.pipe(uglify())
-	.pipe(insert.transform(function(contents, file){
+	.pipe(insert.transform(function(contents){
 		var functions = contents.match(/function (\S+)\(\)/g), modules=[];
 		for(var i = 0; i < functions.length; i++){
 			var classNames = /^function (\S+)\(\)$/.exec(functions[i]).pop();
-			modules[i] = "_x['" + classNames +"'] = new " + classNames + "()";
+			modules[i] = "global['" + classNames +"'] = new " + classNames + "()";
 		}
-		var wrapper = "(function(global){'use strict';var _x = {};" + contents + ";" + modules.join(';') + ";global._x = _x;})(window);";
+		var wrapper = "var _x=(function(global){'use strict';" + contents + ";" + modules.join(';') + ";return global;})(window._x||{});";
 		return wrapper;
 	}))
 	.pipe(rename({
 		suffix:'.min'
+	}))
+	.pipe(header(fs.readFileSync('./version.txt','utf8'),{
+		pkg:pkg
+	}))
+	.pipe(gulp.dest('./build/'));
+
+	gulp.src('./src/**/*.js')
+	.pipe(concat('_x.js'))
+	.pipe(uglify())
+	.pipe(insert.transform(function(contents){
+		var functions = contents.match(/function (\S+)\(\)/g), modules=[];
+		for(var i = 0; i < functions.length; i++){
+			var classNames = /^function (\S+)\(\)$/.exec(functions[i]).pop();
+			modules[i] = "global['" + classNames +"'] = new " + classNames + "()";
+		}
+		var wrapper = "var _x=(function(global){'use strict';" + contents + ";" + modules.join(';') + ";return global;})({});module.exports=_x;";
+		return wrapper;
 	}))
 	.pipe(header(fs.readFileSync('./version.txt','utf8'),{
 		pkg:pkg
