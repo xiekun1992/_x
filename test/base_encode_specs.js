@@ -25,53 +25,53 @@ describe('when use base64,', function() {
   });
 });
 
-// describe('when use base32,', function() {
-//   it('"" should equal ""', function() {
-//     expect(baseEncode.base32("")).toEqual("");
-//   });
-//   it('f should equal MY======', function() {
-//     expect(baseEncode.base32("f")).toEqual("MY======");
-//   });
-//   it('fo should equal MZXQ====', function() {
-//     expect(baseEncode.base32("fo")).toEqual("MZXQ====");
-//   });
-//   it('foo should equal MZXW6===', function() {
-//     expect(baseEncode.base32("foo")).toEqual("MZXW6===");
-//   });
-//   it('foob should equal MZXW6YQ=', function() {
-//     expect(baseEncode.base32("foob")).toEqual("MZXW6YQ=");
-//   });
-//   it('fooba should equal MZXW6YTB', function() {
-//     expect(baseEncode.base32("fooba")).toEqual("MZXW6YTB");
-//   });
-//   it('foobar should equal MZXW6YTBOI======', function() {
-//     expect(baseEncode.base32("foobar")).toEqual("MZXW6YTBOI======");
-//   });
-// });
+describe('when use base32,', function() {
+  it('"" should equal ""', function() {
+    expect(baseEncode.base32("")).toEqual("");
+  });
+  it('f should equal MY======', function() {
+    expect(baseEncode.base32("f")).toEqual("MY======");
+  });
+  it('fo should equal MZXQ====', function() {
+    expect(baseEncode.base32("fo")).toEqual("MZXQ====");
+  });
+  it('foo should equal MZXW6===', function() {
+    expect(baseEncode.base32("foo")).toEqual("MZXW6===");
+  });
+  it('foob should equal MZXW6YQ=', function() {
+    expect(baseEncode.base32("foob")).toEqual("MZXW6YQ=");
+  });
+  it('fooba should equal MZXW6YTB', function() {
+    expect(baseEncode.base32("fooba")).toEqual("MZXW6YTB");
+  });
+  it('foobar should equal MZXW6YTBOI======', function() {
+    expect(baseEncode.base32("foobar")).toEqual("MZXW6YTBOI======");
+  });
+});
 
-// describe('when use base32hex,', function() {
-//   it('"" should equal ""', function() {
-//     expect(baseEncode.base32hex("")).toEqual("");
-//   });
-//   it('f should equal CO======', function() {
-//     expect(baseEncode.base32hex("f")).toEqual("CO======");
-//   });
-//   it('fo should equal CPNG====', function() {
-//     expect(baseEncode.base32hex("fo")).toEqual("CPNG====");
-//   });
-//   it('foo should equal CPNMU===', function() {
-//     expect(baseEncode.base32hex("foo")).toEqual("CPNMU===");
-//   });
-//   it('foob should equal CPNMUOG=', function() {
-//     expect(baseEncode.base32hex("foob")).toEqual("CPNMUOG=");
-//   });
-//   it('fooba should equal CPNMUOJ1', function() {
-//     expect(baseEncode.base32hex("fooba")).toEqual("CPNMUOJ1");
-//   });
-//   it('foobar should equal CPNMUOJ1E8======', function() {
-//     expect(baseEncode.base32hex("foobar")).toEqual("CPNMUOJ1E8======");
-//   });
-// });
+describe('when use base32hex,', function() {
+  it('"" should equal ""', function() {
+    expect(baseEncode.base32hex("")).toEqual("");
+  });
+  it('f should equal CO======', function() {
+    expect(baseEncode.base32hex("f")).toEqual("CO======");
+  });
+  it('fo should equal CPNG====', function() {
+    expect(baseEncode.base32hex("fo")).toEqual("CPNG====");
+  });
+  it('foo should equal CPNMU===', function() {
+    expect(baseEncode.base32hex("foo")).toEqual("CPNMU===");
+  });
+  it('foob should equal CPNMUOG=', function() {
+    expect(baseEncode.base32hex("foob")).toEqual("CPNMUOG=");
+  });
+  it('fooba should equal CPNMUOJ1', function() {
+    expect(baseEncode.base32hex("fooba")).toEqual("CPNMUOJ1");
+  });
+  it('foobar should equal CPNMUOJ1E8======', function() {
+    expect(baseEncode.base32hex("foobar")).toEqual("CPNMUOJ1E8======");
+  });
+});
 
 describe('when use base16,', function() {
   it('"" should equal ""', function() {

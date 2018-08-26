@@ -51,7 +51,7 @@ function BaseEncode() {
       var binaryGroupBefore = divideBinary(binaryStr, 3 * 8);
       var binaryGroupAfter = [];
       for (var i = 0; i < binaryGroupBefore.length; i++) {
-        let g = divideBinary(binaryGroupBefore[i], 6, true);
+        var g = divideBinary(binaryGroupBefore[i], 6, true);
         binaryGroupAfter.push(g);
       }
       var res = '';
@@ -70,10 +70,50 @@ function BaseEncode() {
       return res;  
     },
     base32: function(input) {
-    
+      var binaryStr = inputToBinary(input);
+      var binaryGroupBefore = divideBinary(binaryStr, 5 * 8);
+      var binaryGroupAfter = [];
+      for (var i = 0; i < binaryGroupBefore.length; i++) {
+        var g = divideBinary(binaryGroupBefore[i], 5, true);
+        binaryGroupAfter.push(g);
+      }
+      var res = '';
+      for (var i = 0; i < binaryGroupAfter.length; i++) {
+        if (binaryGroupAfter[i]) {
+          for (var j = 0; j < 8; j++) {
+            var binaryS = binaryGroupAfter[i][j];
+            if (binaryS) {
+              res += base32Alphabet[parseInt(binaryS, 2)];
+            } else {
+              res += '=';
+            }
+          }
+        }
+      }
+      return res;
     },
     base32hex: function(input) {
-    
+      var binaryStr = inputToBinary(input);
+      var binaryGroupBefore = divideBinary(binaryStr, 5 * 8);
+      var binaryGroupAfter = [];
+      for (var i = 0; i < binaryGroupBefore.length; i++) {
+        var g = divideBinary(binaryGroupBefore[i], 5, true);
+        binaryGroupAfter.push(g);
+      }
+      var res = '';
+      for (var i = 0; i < binaryGroupAfter.length; i++) {
+        if (binaryGroupAfter[i]) {
+          for (var j = 0; j < 8; j++) {
+            var binaryS = binaryGroupAfter[i][j];
+            if (binaryS) {
+              res += base32hexAlphabet[parseInt(binaryS, 2)];
+            } else {
+              res += '=';
+            }
+          }
+        }
+      }
+      return res;
     },
     base16: function(input) {
       var binaryStr = inputToBinary(input);
