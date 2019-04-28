@@ -14,8 +14,8 @@ before_script:
 - sleep 3 # give xvfb some time to start
 
 script:
-- echo ${AWS_EC2} > ~/.ssh/known_hosts
-- echo ${PRIVATE_KEY} > key.pem
+- echo ${AWS_EC2_BASE64} | base64 --decode > ~/.ssh/known_hosts
+- echo ${PRIVATE_KEY_BASE64} | base64 --decode > key.pem
 - cat ~/.ssh/known_hosts
 - cat key.pem
 - chmod 700 key.pem
