@@ -16,6 +16,9 @@ before_script:
 script:
 - echo ${AWS_EC2} > ~/.ssh/known_hosts
 - echo ${PRIVATE_KEY} > key.pem
+- cat ~/.ssh/known_hosts
+- cat key.pem
+- chmod 700 key.pem
 - ssh -o "StrictHostKeyChecking no" -i key.pem ubuntu@ec2-13-231-201-110.ap-northeast-1.compute.amazonaws.com "ls"
 
 # http://blog.500tech.com/setting-up-travis-ci-to-run-tests-on-latest-google-chrome-version/
